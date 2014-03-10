@@ -10,6 +10,9 @@
 
 @interface PCTimeScrollBar : UIView
 {
+    CGPoint       _lastContentOffset;
+    
+    int           _scrollDirection;// 1:向上 2：向下
     UITableView*  _tableView;
     UIImageView*  _scrolIndicator;
 }

@@ -50,7 +50,9 @@
     _timeScrollBar = [[PCTimeScrollBar alloc] initWithFrame:CGRectMake(0, 0, 80, 60)
                                                   tableView:_scrollview];
     NSIndexPath* indexpath = [_timeScrollBar getIndexPath];
-    _timeScrollBar.label.text = [NSString stringWithFormat:@"当前是：%d分组\r%d行",[indexpath section],[indexpath row]];
+    if (indexpath) {
+        _timeScrollBar.label.text = [NSString stringWithFormat:@"当前是：r%d行",[indexpath row]];        
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -150,8 +152,7 @@
 #pragma mark @protocol UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-/*
-    if (!_ptrSBIndicators) {
+    /*if (!_ptrSBIndicators) {
         _ptrSBIndicators = [self getIndecatorView];
         
         UILabel* flowingview= [[UILabel alloc] initWithFrame:CGRectMake(-90,0,80, 30)];
@@ -185,9 +186,14 @@
     {
         NSIndexPath* path = [_scrollview indexPathForCell:(UITableViewCell*)superv];
         flagview.text  = [NSString stringWithFormat:@"第：%d",[path row]];
-    }
-*/
+    }*/
+    
     [_timeScrollBar scrollViewDidScroll];
+    NSIndexPath* indexpath = [_timeScrollBar getIndexPath];
+    if (!indexpath) {
+        return;
+    }
+    [_timeScrollBar.label setText:[NSString stringWithFormat:@"第%d行",[indexpath row]]];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate

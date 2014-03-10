@@ -35,7 +35,7 @@
         label.numberOfLines   = 2;
         label.textColor       = [UIColor whiteColor];
         label.textAlignment   = NSTextAlignmentCenter;
-        label.font= [UIFont systemFontOfSize:14];
+        label.font= [UIFont systemFontOfSize:11];
         [self addSubview:label];
         self.label = label;
         [label release];
@@ -45,7 +45,7 @@
 
 -(NSIndexPath*)getIndexPath
 {
-    CGPoint point = [self center];
+    CGPoint point = CGPointMake([self center].x, CGRectGetMaxY(self.frame));//[self center];
     point = [_scrolIndicator convertPoint:point toView:_tableView];
     
     UIView *view = [_tableView hitTest:point withEvent:UIEventTypeTouches];
@@ -90,6 +90,8 @@
             return;
         }
     }
+    _lastContentOffset = _tableView.contentOffset;
+    
     self.frame = CGRectMake(self.frame.origin.x,
                            (CGRectGetHeight(_scrolIndicator.frame) / 2.0f) - (CGRectGetHeight(self.frame) / 2.0f),
                            self.frame.size.width,
